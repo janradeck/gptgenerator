@@ -1,0 +1,33 @@
+@startuml AppModel
+class "AppModel" as pmodel
+
+class "AppStateModel" as asmodel {
+}
+
+class "ResultModel" as prmodel {
+}
+
+class "FileStateModel" as fstate {
+}
+
+class "ConfigModel" as conf {
+}
+
+note "Der aktuelle Verarbeitungszustand.\nWird in der MainView dargestellt." as Nasmodel
+asmodel -- Nasmodel
+
+note "Das Ergebnis der Verarbeitung.\nWird in der MainView dargestellt." as Nprmodel
+prmodel -- Nprmodel
+
+note "Die Liste der Dateien und ihr aktueller Zustand.\nWird in der MainView dargestellt." as Nfstate
+fstate -- Nfstate
+
+note "Die Konfigurationswerte.\nWird in der ConfigurationView bearbeitet." as Nconf
+conf -- Nconf
+
+pmodel *-- asmodel
+pmodel *-- prmodel
+pmodel *-- fstate
+pmodel *-- conf
+
+@enduml

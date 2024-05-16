@@ -1,0 +1,37 @@
+@startuml DirectoryView
+salt
+{
+{+
+. | .
+{
+. | . |. | <size:16>Directory-specific settings</size> | * | * | * | * 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . |. | <size:14>Source and destination</size> | * | * | * | * | * 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . | . |<b>Src (rel)</b> | . | . | . | . | "java      " | . | .
+. | . |. | <b>Dst (abs)</b> | . | . | . | . | "d:\develop\robotconfig-server\src\main\java      " | . | . 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . |. | <size:14>Chat GPT parameter</size> | * | * | * | * | * 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . |. | <b>System prompt</b> | . | . | . | . | {+
+.
+.
+"                                         "
+ }
+. | . |. | <b>Individual temperature</b> | . | . | . | . | [X] | . | . 
+. | . |. | <b>Temperature</b> | . | . | . | . | "1.0a" | . | . |<B>Invalid field value!</B>
+. | . |. | . | . | . | . | . | . | . | . 
+. | . |. | <size:14>Marker settings</size> | * | * | * | * | * 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . | . |<b>Marker start / end</b> | . | . | . | . | "INSERT(    " | . | . | ")          "
+
+}
+{
+.
+}
+{
+ [<color:#9a9a9a>   Save  ] | [   Quit  ] 
+}
+}
+}
+@enduml

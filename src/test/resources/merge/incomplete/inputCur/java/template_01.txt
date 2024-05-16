@@ -1,0 +1,5 @@
+Simple text
+//#(fragment_01_01.fragment)#
+
+Some more simple text
+//#(fragment_01_02.fragment)#

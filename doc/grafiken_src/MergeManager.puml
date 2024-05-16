@@ -1,0 +1,12 @@
+@startuml MergeManager
+
+:Alle Dateien in Warteliste "waiting for parse" eintragen;
+while (Datei(en) in Warteliste "waiting for parse")
+:Datei nach Markern durchsuchen;
+if (Alle Marker aktuell?) then (ja)
+:Datei in Warteliste "waiting for merge" übertragen;
+endif
+endwhile
+
+stop
+@enduml

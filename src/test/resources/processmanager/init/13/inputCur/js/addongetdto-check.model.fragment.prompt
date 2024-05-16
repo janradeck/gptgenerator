@@ -1,0 +1,5 @@
+For the class
+//#U(addongetdto.model.ts)#
+create a method check that returns a string
+
+return ''

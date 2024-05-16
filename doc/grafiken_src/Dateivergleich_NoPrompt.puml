@@ -1,0 +1,68 @@
+@startuml Dateivergleich_NoPrompt
+salt
+{
+{+
+. | .
+ <size:14> File comparison for "filename"</size>
+. | .
+{^"Input (Before Merge)"
+ . | .| .| .| .| .
+ . | .| .| .| .| .
+.| .{+
+.| . 
+.| .{+
+ . | .| .| .| .| .
+ . | .
+ .| .| .| .| . | CURRENT | .| .| .| .| .
+ . | .
+ . | .
+
+} .| .|.| . {+
+ . | .| .| .| .| .
+ . | .
+ .| .| .| .| . | PREVIOUS | .| .| .| .| .
+ . | .
+ . | .
+} .| .
+.| .
+}
+.| .
+}
+
+
+{^"Result (After Merge)"
+ . | .| .| .| .| .
+ . | .| .| .| .| .
+.| .{+
+.| . 
+.| .{+
+ . | .| .| .| .| .
+ . | .
+ .| .| .| .| . | CURRENT | .| .| .| .| .
+ . | .
+ . | .
+
+} .| .|.| . {+
+ . | .| .| .| .| .
+ . | .
+ .| .| .| .| . | PREVIOUS | .| .| .| .| .
+ . | .
+ . | .
+} .| .
+.| .
+}
+.| .
+}
+
+{ INCLUDED FILES }
+{
+ . | <b>Filename</b>                | . | . | <b>Status</b>  | . | . 
+ . | <i>FirstIncludedFile.java</i>  | . | . | <b>CHANGED</b> | . | . 
+ . | <i>SecondIncludedFile.java</i> | . | . | .              | . | .  
+}
+}
+
+}
+
+}
+@enduml

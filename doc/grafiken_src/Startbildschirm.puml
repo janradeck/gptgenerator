@@ -1,0 +1,25 @@
+@startuml Startbildschirm
+salt
+{
+{+
+. | .
+{^"File list"
+| . {
+ . | . | . |<b>Filename</b>                | . | . | . | . | <b>Input</b>   | . | . | . | . | . | <b>Merge</b>   | . | . | . | . | <b>Prompt</b>  | . | . | . | . | <b>Reply</b>   | . | . | . | . 
+ . | . | . | filename.java                 | . | . | . | . | <i>CHANGED</i> | . | . | . | . | . | <i>CHANGED</i> | . | . | . | . | <i>N/A</i>     | . | . | . | . | <i>N/A</i>     | . | . | . | . 
+ . | . | . | filename.java.prompt          | . | . | . | . | .              | . | . | . | . | . | <i>CHANGED</i> | . | . | . | . | <i>CHANGED</i> | . | . | . | . | <i>CHANGED</i> | . | . | . | .  
+ . | . | . | filename.ts.prompt            | . | . | . | . | <i>CHANGED</i> | . | . | . | . | . | <i>CHANGED</i> | . | . | . | . | <i>CHANGED</i> | . | . | . | . | <i>CHANGED</i> | . | . | . | .  
+ . | . | . | filename.java.fragment.prompt | . | . | . | . | .              | . | . | . | . | . | .              | . | . | . | . | .              | . | . | . | . | .              | . | . | . | .  
+ . | . | . | filename.java.fragment        | . | . | . | . | .              | . | . | . | . | . | <i>N/A</i>     | . | . | . | . | <i>N/A</i>     | . | . | . | . | <i>N/A</i>     | . | . | . | .  
+}
+}
+{
+ [ Process ] | [ Process selected ] | [ Refresh ] | [ Sort ]
+}
+{
+  [ Configure ] | [ Quit ] 
+}
+
+}
+}
+@enduml

@@ -1,0 +1,19 @@
+/* Start of included file Result-increment.java.fragment */
+/*
+This file should be called ".prompt" in "real life"
+It is  used to simulate the "unmerged" include
+
+The order should be:
+- This file is "merged" to Merge(Cur)
+- This file in Merge(Cur) satifies the include dependencies for "Result.java"
+- Result.java is merged to Merge(Cur)
+
+Result.java will look "broken", because this prompt is included, and not the reply to this prompt
+*/
+For the java class
+
+//#U(Result.java)#
+
+create a method "void increment() which increments "count"
+
+/* End of included file Result-increment.java.fragment */

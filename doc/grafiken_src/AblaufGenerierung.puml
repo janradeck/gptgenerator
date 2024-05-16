@@ -1,0 +1,17 @@
+@startuml AblaufGenerierung
+start
+:MergeManager.initialize();
+:PromptManager.initialize();
+repeat :[2] MergeManager.process();
+if (< 3a1 / 3a2 > PromptManager.filesReady()?) then (yes)
+:[3] PromptManager.process();
+endif
+repeat while ( < 2b1 / 2b2 AND 2c > MergeManager.filesReady() ?) is (yes)
+if ( < 2b1 / 2b2 / 2c > MergeManager.queueEmpty()?) then (yes)
+:[4] Install;
+else (no)
+: [5] Error;
+endif
+
+stop
+@enduml

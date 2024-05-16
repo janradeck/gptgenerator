@@ -1,0 +1,17 @@
+public class Generated {
+
+private int count;
+
+public SingleClass() {
+  count = 0;
+}
+
+public void incrementCount() {
+  count ++;
+}
+
+public void decrementCount() {
+  count --;
+}
+
+}

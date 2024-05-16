@@ -1,0 +1,38 @@
+@startuml ConfigurationView
+salt
+{
+{+
+. | .
+{^"File list"
+| . {
+. | . | . |<b>SRC</b> | . | . | . | . | <b>DST</b> | . | .
+. | . |. | java | . | . | . | . | <i>d:\develop\robotconfig-server\src\main\java</i> | . | . 
+. | . |. | js | . | . | . | . | <i>d:\develop\robotconfig-client\src\app</i> | . | . 
+}
+}
+{
+ [ Edit ] | [ Add] | [ Delete ]
+}
+{
+.
+}
+{
+. | . |. | <size:14>Project settings</size> | * | * | * | * 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . | . |<b>MPS output</b> | . | . | . | . | "c:\MPS\...      " | . | .
+. | . |. | <b>Project root</b> | . | . | . | . | "D:\dev\        " | . | . 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . |. | <size:14>Chat GPT settings</size> | * | * | * | * | * 
+. | . |. | . | . | . | . | . | . | . | . 
+. | . |. | <b>Temperature</b> | . | . | . | . | "1.0a" | . | . |<B>Invalid field value!</B>
+. | . |. | <b>Number of threads</b> | . | . | . | . | "50" | . | . 
+}
+{
+.
+}
+{
+ [<color:#9a9a9a>   Save  ] | [   Quit  ] 
+}
+}
+}
+@enduml

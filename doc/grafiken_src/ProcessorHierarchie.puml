@@ -1,0 +1,19 @@
+@startuml ProcessorHierarchie
+class "ProcessManager" as prm {
+processAll()
+processSelected()
+}
+class "MergeManager" as mm{
+processAll()
+processSelected()
+}
+class "MergeProcessor" as mp
+class "PromptManager" as pm{
+processAll()
+processSelected()
+}
+
+prm *-- mm
+mm -- mp
+prm *-- pm
+@enduml

@@ -1,0 +1,50 @@
+---
+projectRoot: "d:\\develop\\appgenerator-init"
+inputCurDir: "C:\\Users\\Jan\\MPSProjects\\WebApplication\\solutions\\Playground\\\
+  source_gen\\Playground\\Playground\\src_gen"
+installs:
+  partitions:
+  - sourceDirRel: "java"
+    destDirAbs: "D:\\develop\\robotconfig-server\\src_gen\\main\\java"
+    prettyPrintSettings:
+      prettyPrintInput: false
+      prettyPrintMerge: false
+      prettierIgnoreFiles: ""
+    gptConfig:
+      systemMessage: "You are a Java developer. Reply only with code. Do not include\
+        \ example usage or explanations."
+      temperature: 1.0
+      individualTemperature: false
+    templateConfig:
+      markerStart: "//"
+      markerEnd: ""
+  - sourceDirRel: "js"
+    destDirAbs: "D:\\develop\\robotconfig-client\\src\\app\\generated"
+    prettyPrintSettings:
+      prettyPrintInput: false
+      prettyPrintMerge: false
+      prettierIgnoreFiles: ""
+    gptConfig:
+      systemMessage: "You are a Typescript developer. Reply only with code. Do not\
+        \ include example usage or explanations."
+      temperature: 1.2000000476837158
+      individualTemperature: true
+    templateConfig:
+      markerStart: "//"
+      markerEnd: ""
+  - sourceDirRel: "php"
+    destDirAbs: "D:\\app\\xampp\\htdocs"
+    prettyPrintSettings:
+      prettyPrintInput: false
+      prettyPrintMerge: false
+      prettierIgnoreFiles: ""
+    gptConfig:
+      systemMessage: ""
+      temperature: 1.0
+      individualTemperature: false
+    templateConfig:
+      markerStart: "//"
+      markerEnd: ""
+temperature: 1.0
+numberOfThreads: 50
+prod: false
