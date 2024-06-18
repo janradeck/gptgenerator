@@ -40,7 +40,7 @@ public class ConfigurationRepository implements IConfigurationRepository{
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		try {
-			mapper.writeValue(new File(configPath), this);
+			mapper.writeValue(new File(configPath), config);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

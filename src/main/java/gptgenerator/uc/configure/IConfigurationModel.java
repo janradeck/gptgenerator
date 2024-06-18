@@ -1,5 +1,7 @@
 package gptgenerator.uc.configure;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import gptgenerator.uc.configure.merge.ITemplateConfigModel;
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
 import gptgenerator.uc.configure.sourcepartition.SourcePartitioning;
@@ -9,6 +11,7 @@ public interface IConfigurationModel {
 
 	void updateDirectoriesAndNotify();
 	void markAsValid();
+	@JsonIgnore
 	boolean isValid();
 	void setProjectRoot(String root);
 	void setInputCurrentDir(String dir);
