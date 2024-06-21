@@ -5,21 +5,21 @@ import java.util.Locale;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Represents a temperature value in the GPT system.
+ * Represents a temperature value for an LLM chat.<br>
  * The temperature value must be within the range of MIN and MAX.
  */
-public class GptTemperature {
+public class ChatTemperature {
 	public static final double MIN = 0.0;
 	private static final double DEF_TEMPERATURE = 1.0;
 	public static final double MAX = 2.0;
 	
 	private Double temperature;
 
-	public GptTemperature() {
+	public ChatTemperature() {
 		temperature = DEF_TEMPERATURE;
 	}
 
-	public GptTemperature(GptTemperature source) {
+	public ChatTemperature(ChatTemperature source) {
 		this.temperature = source.temperature;
 	}
 
@@ -41,12 +41,12 @@ public class GptTemperature {
 	}
 
 	/**
-	 * Setzt den Wert, wenn er sich in den gültigen Grenzen befindet.
-	 * @param temperature
+	 * Sets the new value if it is valid
+	 * @param newTemperatur
 	 */
-	public void setTemperature(Double temperature) {
-		if (validate(temperature)) {
-			this.temperature = temperature;
+	public void setTemperature(Double newTemperatur) {
+		if (validate(newTemperatur)) {
+			this.temperature = newTemperatur;
 		}
 	}
 
@@ -61,7 +61,7 @@ public class GptTemperature {
 	}
 	
 	/**
-	 * Der temperature als String, mit "." als Dezimaltrennzeichen
+	 * The temperature as String, with "." as decimal separator
 	 * @return
 	 */
 	@JsonIgnore
@@ -70,6 +70,6 @@ public class GptTemperature {
 	}
 
 	public static String validationMessage() {
-		return String.format(Locale.US, "Error! Valid values: %.1f <= temperature <= %.1f", GptTemperature.MIN, GptTemperature.MAX);		
+		return String.format(Locale.US, "Error! Valid values: %.1f <= temperature <= %.1f", ChatTemperature.MIN, ChatTemperature.MAX);		
 	}
 }

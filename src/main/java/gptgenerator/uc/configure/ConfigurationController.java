@@ -14,12 +14,19 @@ import gptgenerator.uc.mainview.IMainModel;
 import gptgenerator.uc.processing.o2prompt.ChatClientFactory;
 import gptgenerator.uc.processing.o2prompt.IChatClient;
 
+/**
+ * 
+ */
 public class ConfigurationController implements IConfigurationController {
 	private List<IConfigurationView> views = new ArrayList<>();
     
 	private IMainModel mainModel;
     private IConfigurationModel configurationModel;
     
+    /**
+     * @param mainModel
+     * @param configurationModel
+     */
     public ConfigurationController(IMainModel mainModel, IConfigurationModel configurationModel) {
 		this.mainModel = mainModel;
     	this.configurationModel = configurationModel;  	
@@ -37,51 +44,76 @@ public class ConfigurationController implements IConfigurationController {
 	}
 	
 	@Override
-	public void setTemperature(String temperatureText) {
-		configurationModel.setTemperature(temperatureText);
+	public void setChatTemperature(String temperatureText) {
+		configurationModel.setChatTemperature(temperatureText);
 	}
 
 	@Override
-	public void setNumberOfThreads(int number) {
-		configurationModel.setNumberOfThreads(number);
+	public void setChatNumberOfThreads(int number) {
+		configurationModel.setChatNumberOfThreads(number);
+	}
+
+	@Override
+	public void setChatApiURL(String chatApiURL) {
+		configurationModel.setChatApiURL(chatApiURL);
+	}
+
+	@Override
+	public void notifySetChatApiURL(String chatApiURL) {
+		for (IConfigurationView view: views) {
+			view.setChatApiURL(chatApiURL);
+		}
 	}
 	
 	@Override
+	public void setChatApiKey(String chatApiToken) {
+		configurationModel.setChatApiToken(chatApiToken);
+	}
+	
+
+	@Override
+	public void notifySetChatApiToken(String chatApiToken) {
+		for (IConfigurationView view : views) {
+			view.setChatApiKey(chatApiToken);
+		}
+	}
+		
+	@Override
 	public void setPartitionAt(int index, ISourcePartitionModel model) {
-		configurationModel.setInstallAt(index, model);
+		configurationModel.setSourcePartitionAt(index, model);
 	}
 
 	@Override
 	public void addPartition(ISourcePartitionModel model) {
-		configurationModel.addPartition(model);
+		configurationModel.addSourcePartition(model);
 	}
 
 	@Override
 	public void removePartition(int index) {
-		configurationModel.removeInstall(index);
+		configurationModel.removeSourcePartitionAt(index);
 	}
 
 	@Override
-	public Double getTemperature(String baseFilename) {
-		return configurationModel.getTemperature(baseFilename);
+	public Double getChatTemperature(String baseFilename) {
+		return configurationModel.getChatTemperature(baseFilename);
 	}
 
 
 	@Override
-	public IChatClient getChatClient(double temperature) {
-		return ChatClientFactory.getChatClient(this, temperature);
+	public IChatClient getChatClient(String chatApiUrl, String chatApiKey, double temperature) {
+		return ChatClientFactory.getChatClient(this, chatApiUrl, chatApiKey, temperature);
 	}
 	
 	@Override
-	public boolean isProd() {
-		return configurationModel.isProd();
+	public boolean makeApiCalls() {
+		return configurationModel.makeChatApiCalls();
 	}
 
 	
 	@Override
-	public void notifySetTemperature(String temperatureText) {
+	public void notifySetChatTemperature(String temperatureText) {
 		for (IConfigurationView view: views) {
-			view.setTemperature(temperatureText);
+			view.setChatTemperature(temperatureText);
 		}
 	}
 
@@ -100,14 +132,14 @@ public class ConfigurationController implements IConfigurationController {
 	}
 
 	@Override
-	public void notifySetNumberOfThreads(String numberOfThreads) {
+	public void notifySetChatNumberOfThreads(String numberOfThreads) {
 		for (IConfigurationView view: views) {
-			view.setNumberOfThreads(numberOfThreads);
+			view.setChatNumberOfThreads(numberOfThreads);
 		}
 	}
 
 	@Override
-	public void notifySetInstalls(SourcePartitioning installs) {
+	public void notifySetSourcePartitions(SourcePartitioning installs) {
 		notifyInstallsClear();
 		for (ISourcePartitionModel part: installs.getPartitions()) {
 			notifyAddPartition(part);
@@ -115,21 +147,22 @@ public class ConfigurationController implements IConfigurationController {
 	}
 
 	@Override
-	public void setProd(boolean isProd) {
-		configurationModel.setProd(isProd);
+	public void setMakeApiCalls(boolean isProd) {
+		configurationModel.setMakeChatApiCalls(isProd);
 	}
 
 	@Override
-	public void notifySetIsProd(boolean isProd) {
+	public void notifySetMakeApiCalls(boolean isProd) {
 		for (IConfigurationView view: views) {
-			view.setIsProd(isProd);
+			view.setMakeApiCalls(isProd);
 		}
 	}
 
 	
+	
 	@Override
-	public Integer getNumberOfThreads() {
-		return configurationModel.getNumberOfThreads();
+	public Integer getChatNumberOfThreads() {
+		return configurationModel.getChatNumberOfThreads();
 	}
     
 	@Override
@@ -178,7 +211,7 @@ public class ConfigurationController implements IConfigurationController {
 
 	@Override
 	public SourcePartitioning getSourcePartitioning() {
-		return configurationModel.getInstalls();
+		return configurationModel.getSourcePartitions();
 	}
 	
 	@Override
@@ -191,7 +224,7 @@ public class ConfigurationController implements IConfigurationController {
 	}
 
 	public void editTargetSubDir(JFrame parentView, ConfigurationView configurationView, int index) {
-		ISourcePartitionModel modelCopy = new SourcePartition(configurationModel.getInstall(index));
+		ISourcePartitionModel modelCopy = new SourcePartition(configurationModel.getSourcePartition(index));
 		SourcePartitionView editInstallationView = new SourcePartitionView(parentView, this, modelCopy,  index);
     	editInstallationView.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -228,12 +261,12 @@ public class ConfigurationController implements IConfigurationController {
 	public void requestViewUpdate() {
 		notifySetProjectRoot(configurationModel.getProjectRoot());
 		notifySetInputCurrentDir(configurationModel.getInputCurDir());
-		notifySetTemperature(configurationModel.getTemperatureString());
-		notifySetNumberOfThreads(configurationModel.getNumberOfThreads().toString());
-		notifySetIsProd(configurationModel.isProd());
+		notifySetChatTemperature(configurationModel.getChatTemperatureString());
+		notifySetChatNumberOfThreads(configurationModel.getChatNumberOfThreads().toString());
+		notifySetMakeApiCalls(configurationModel.makeChatApiCalls());
 		
 		notifyInstallsClear();
-		for (ISourcePartitionModel part: configurationModel.getInstalls().getPartitions()) {
+		for (ISourcePartitionModel part: configurationModel.getSourcePartitions().getPartitions()) {
 			notifyAddPartition(part);
 		}
 	}
@@ -257,6 +290,17 @@ public class ConfigurationController implements IConfigurationController {
 	public String getMergeCurDir() {
 		return configurationModel.getMergeCurDir();
 	}
+
+	@Override
+	public String getChatApiURL() {
+		return configurationModel.getChatApiURL();
+	}
+
+	@Override
+	public String getChatApiToken() {
+		return configurationModel.getChatApiToken();
+	}
+
 
 
 }

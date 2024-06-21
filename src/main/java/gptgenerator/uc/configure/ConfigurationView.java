@@ -33,7 +33,7 @@ import javax.swing.table.TableColumn;
 import gptgenerator.services.GbcFactory;
 import gptgenerator.services.GuiElementFactory;
 import gptgenerator.services.GuiPresetsService;
-import gptgenerator.uc.configure.gpt.GptTemperature;
+import gptgenerator.uc.configure.gpt.ChatTemperature;
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
 import gptgenerator.uc.configure.sourcepartition.SourcePartition;
 
@@ -41,9 +41,10 @@ import gptgenerator.uc.configure.sourcepartition.SourcePartition;
  * Dialogue to edit the configurationModel values 
  */
 public class ConfigurationView extends JFrame implements IConfigurationView {
+	private static final String MAKE_CHAT_API_CALLS = "Make Chat API calls";
 	private static final int SECOND_COLUMN_WIDTH = 250;
     private static final int FIRST_COLUMN_WIDTH = 20;
-    private static final int MIN_HEIGHT = 500;
+    private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 800;
     private static final long serialVersionUID = 6646662526692639816L;
 	private static final int FIELD_LENGTH = 30;
@@ -65,7 +66,11 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
     private JLabel temperatureMessage;
     private JTextField numberOfThreadsField;
     private JLabel numberOfThreadsStatus;
-    private JCheckBox isProdCheckBox;
+
+    private JTextField chatApiUrlField;
+    private JTextField chatApiKeyField;
+        
+    private JCheckBox makeChatApiCallsCheckBox;
     
     private JButton saveButton;
     private JButton editInstallButton;
@@ -206,29 +211,43 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         mainPanel.add(promptCurrentDirField, gbc);
         gbcc.nextRow();
 
+        
+        // SECTION HEADING for chat API settings        
+        gbc = gbcc.getHorizontal(labelInsets);
+        gbc.gridwidth = GRID_COLUMNS;
+        mainPanel.add(GuiElementFactory.subHeadingLabel("Chat API settings"), gbc);
+        gbcc.nextRow();
+            
         // PROD mode
         gbc = gbcc.getNone(editInsets);
         gbc.anchor = GridBagConstraints.EAST;        
-        mainPanel.add(new JLabel("Production mode"), gbc);
+        mainPanel.add(new JLabel(MAKE_CHAT_API_CALLS), gbc);
 
-        isProdCheckBox = new JCheckBox();
+        makeChatApiCallsCheckBox = new JCheckBox();
         
         gbc = gbcc.getNone(editInsets);
         gbc.anchor = GridBagConstraints.LINE_START;
-        //gbc.gridwidth = GRID_COLUMNS - 1;
-        mainPanel.add(isProdCheckBox, gbc);
+        mainPanel.add(makeChatApiCallsCheckBox, gbc);
+
+        // Warning: Setting production mode to true will result in charges to your account!
+        gbc = gbcc.getNone(editInsets);
+        gbc.anchor = GridBagConstraints.WEST;        		
+        mainPanel.add(new JLabel("Attention! If this check box is set the application will make calls to the API."), gbc);
+        
         gbcc.nextRow();
         
-        // SECTION HEADING for GPT settings        
-        gbc = gbcc.getHorizontal(labelInsets);
-        gbc.gridwidth = GRID_COLUMNS;
-        mainPanel.add(GuiElementFactory.subHeadingLabel("Chat GPT settings"), gbc);
+        gbc = gbcc.getNone(editInsets);
+        gbc = gbcc.getNone(editInsets);
+        gbc = gbcc.getNone(editInsets);
+        gbc.anchor = GridBagConstraints.WEST;        		
+        mainPanel.add(new JLabel("And you will be billed by your provider."), gbc);
         gbcc.nextRow();
+               
         
-        // TEMPERATURE
+        // CHAT TEMPERATURE
         gbc = gbcc.getNone(editInsets);
         gbc.anchor = GridBagConstraints.EAST;                
-        mainPanel.add(new JLabel("Temperature"), gbc);
+        mainPanel.add(new JLabel("Chat temperature"), gbc);
         
         temperatureField = new JTextField();
         temperatureField.setColumns(NUMBER_FIELD_LENGTH);
@@ -238,7 +257,7 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         gbc.anchor = GridBagConstraints.WEST;                
         mainPanel.add(temperatureField, gbc);
                 
-        temperatureMessage = new JLabel(GptTemperature.validationMessage());
+        temperatureMessage = new JLabel(ChatTemperature.validationMessage());
         gbc = gbcc.getNone(editInsets);
         gbc.anchor = GridBagConstraints.LINE_START;
         
@@ -246,10 +265,10 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         temperatureMessage.setVisible(false);        
         gbcc.nextRow();
 
-        // NUMBER OF THREADS
+        // CHAT NUMBER OF THREADS
         gbc = gbcc.getNone(editInsets);
         gbc.anchor = GridBagConstraints.EAST;                
-        mainPanel.add(new JLabel("Number of threads"), gbc);
+        mainPanel.add(new JLabel("Number of chat threads"), gbc);
         
         numberOfThreadsField = new JTextField();
         numberOfThreadsField.setColumns(NUMBER_FIELD_LENGTH);
@@ -266,6 +285,36 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         mainPanel.add(numberOfThreadsStatus, gbc);
         numberOfThreadsStatus.setVisible(false);
         gbcc.nextRow();
+        
+        // CHAT API URL
+        gbc = gbcc.getNone(editInsets);
+        gbc.anchor = GridBagConstraints.EAST;                
+        mainPanel.add(new JLabel("Chat API URL"), gbc);     
+       
+        chatApiUrlField = new JTextField();
+        chatApiUrlField.setColumns(FIELD_LENGTH);
+        
+        gbc = gbcc.getHorizontal(editInsets);
+        gbc.gridwidth = GRID_COLUMNS - 1;
+        gbc.anchor = GridBagConstraints.WEST;                
+        mainPanel.add(chatApiUrlField, gbc);
+        gbcc.nextRow();
+        
+        // CHAT API KEY
+        gbc = gbcc.getNone(editInsets);
+        gbc.anchor = GridBagConstraints.EAST;                
+        mainPanel.add(new JLabel("Chat API Key"), gbc);
+        
+        chatApiKeyField = new JTextField();
+        chatApiKeyField.setColumns(FIELD_LENGTH);
+        chatApiKeyField.setMinimumSize(MINIMUM_INPUT_DIMENSION);
+        gbc = gbcc.getHorizontal(editInsets);
+        gbc.gridwidth = GRID_COLUMNS - 1;
+        gbc.anchor = GridBagConstraints.WEST;                
+        
+        mainPanel.add(chatApiKeyField, gbc);
+        gbcc.nextRow();
+                
 
         // MAIN BUTTON PANEL
         JPanel mainButtonPanel = new JPanel();
@@ -360,13 +409,13 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
             }
         });        
         
-        isProdCheckBox.addItemListener(new ItemListener() {
+        makeChatApiCallsCheckBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    configurationController.setProd(true);
+                    configurationController.setMakeApiCalls(true);
                 } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-                    configurationController.setProd(false);
+                    configurationController.setMakeApiCalls(false);
                 }
             }
         });
@@ -403,6 +452,42 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
             public void changedUpdate(DocumentEvent e) {
                 // Plain text components do not fire these events
             }
+        });
+        
+        
+        chatApiUrlField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	chatApiUrlWasChanged();
+            }
+
+
+			@Override
+            public void removeUpdate(DocumentEvent e) {
+            	chatApiUrlWasChanged();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Plain text components do not fire these events
+            }
+        });        
+        
+        chatApiKeyField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	chatApiKeyWasChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	chatApiKeyWasChanged();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Plain text components do not fire these events
+            }
         });        
     	
     	
@@ -416,7 +501,8 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
     	
     }
 
-    private void requestViewUpdate() {
+
+	private void requestViewUpdate() {
     	SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -451,33 +537,42 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         }
     }
     
+    /**
+     * Disable the save button if the temperature and numberOfThreads fields are not valid
+     */
     private void validateFields() {
         boolean isTemperatureValid = validateTemperature();
         boolean isNumberValid = validateNumberOfThreads();
-
-        // Enable or disable the Save button based on validation results
         saveButton.setEnabled(isTemperatureValid && isNumberValid);
     }
 
     private void temperatureWasChanged() {
         if (validateTemperature()) {
-        	configurationController.setTemperature(temperatureField.getText());
+        	configurationController.setChatTemperature(temperatureField.getText());
         }
         validateFields();
     }
     
     private void numberOfThreadsWasChanged() {
     	if (validateNumberOfThreads()) {
-        		int numberOfThreads = Integer.valueOf(numberOfThreadsField.getText());
-        		configurationController.setNumberOfThreads(numberOfThreads);
+        		int numberOfThreads = Integer.parseInt(numberOfThreadsField.getText());
+        		configurationController.setChatNumberOfThreads(numberOfThreads);
     	}
     	validateFields();
     }
     
+    private void chatApiUrlWasChanged() {
+    	configurationController.setChatApiURL(chatApiUrlField.getText());		
+	}
+
+    private void chatApiKeyWasChanged() {
+		configurationController.setChatApiKey(chatApiKeyField.getText());
+	}
+        
     private boolean validateTemperature() {
         String temperatureText = temperatureField.getText();
 
-        boolean isValid = GptTemperature.validateString(temperatureText);
+        boolean isValid = ChatTemperature.validateString(temperatureText);
         temperatureMessage.setVisible(!isValid);
         return isValid;
     }
@@ -537,24 +632,38 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
 	}
 
 	@Override
-	public void setTemperature(String temperatureText) {
+	public void setChatTemperature(String temperatureText) {
 		if (!temperatureField.getText().equals(temperatureText)) {
 			temperatureField.setText(temperatureText);
 		}
 	}
 
 	@Override
-	public void setNumberOfThreads(String numberOfTreads) {
+	public void setChatNumberOfThreads(String numberOfTreads) {
 		if (! numberOfThreadsField.getText().equals(numberOfTreads)) {
 			numberOfThreadsField.setText(numberOfTreads);
 		}
 	}
 
 	@Override
-	public void setIsProd(boolean isProd) {
-		if (isProdCheckBox.isSelected() != isProd) {
-			isProdCheckBox.setSelected(isProd);
+	public void setMakeApiCalls(boolean makeApiCalls) {
+		if (makeChatApiCallsCheckBox.isSelected() != makeApiCalls) {
+			makeChatApiCallsCheckBox.setSelected(makeApiCalls);
 		}
 	}
-    
+
+	@Override
+	public void setChatApiURL(String chatApiURL) {
+		if (!chatApiUrlField.getText().equals(chatApiURL)) {
+			chatApiUrlField.setText(chatApiURL);
+		}
+	}
+
+	@Override
+	public void setChatApiKey(String chatApiKey) {
+		if (!chatApiKeyField.getText().equals(chatApiKey)) {
+			chatApiKeyField.setText(chatApiKey);
+		}
+	}
+
 }

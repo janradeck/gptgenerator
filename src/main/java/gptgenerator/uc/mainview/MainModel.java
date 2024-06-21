@@ -3,6 +3,11 @@ package gptgenerator.uc.mainview;
 import gptgenerator.uc.configure.IConfigurationModel;
 import gptgenerator.uc.configure.ConfigurationRepository;
 
+/**
+ * Responsible for loading and saving the configuration model.
+ * @see ConfigurationRepository
+ * @see IConfigurationModel
+ */
 public class MainModel implements IMainModel {
     private ConfigurationRepository confRepo = null;
 

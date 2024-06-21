@@ -12,6 +12,10 @@ interface IConfigurationRepository {
     void storeConfiguration(IConfigurationModel config);
 }
 
+/**
+ * A repository class for the ConfigurationModel instance
+ * @see ConfigurationModel
+ */
 public class ConfigurationRepository implements IConfigurationRepository{
     private String configPath;
 

@@ -11,7 +11,7 @@ import gptgenerator.uc.configure.ConfigurationController;
 import gptgenerator.uc.configure.ConfigurationModel;
 import gptgenerator.uc.configure.IConfigurationController;
 import gptgenerator.uc.configure.IConfigurationModel;
-import gptgenerator.uc.configure.gpt.GPTConfig;
+import gptgenerator.uc.configure.gpt.ChatConfig;
 import gptgenerator.uc.configure.sourcepartition.PrettyPrintSettings;
 import gptgenerator.uc.configure.sourcepartition.SourcePartition;
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
@@ -38,7 +38,7 @@ public class ProcessManagerTestSetup {
 		public ProcessManagerTestSetup(String testCaseBase) {
 			
 			configurationModel = getConfigurationModel(testCaseBase);
-			configurationModel.setProd(false);
+			configurationModel.setMakeChatApiCalls(false);
 			MainModel mainModel = new MainModel(testCaseBase);	
 			configurationController = new ConfigurationController(mainModel, configurationModel);
 
@@ -56,8 +56,8 @@ public class ProcessManagerTestSetup {
 			configurationModel.setInputCurrentDir(inputCurrentDir);
 			configurationModel.setProjectRoot(projectRoot);
 			
-			configurationModel.addPartition(makeSourcePart(projectRoot, "You are a Java developer", "java"));
-			configurationModel.addPartition(makeSourcePart(projectRoot, "You are a Typescript developer", "js"));
+			configurationModel.addSourcePartition(makeSourcePart(projectRoot, "You are a Java developer", "java"));
+			configurationModel.addSourcePartition(makeSourcePart(projectRoot, "You are a Typescript developer", "js"));
 			return configurationModel;
 		}
 		
@@ -77,7 +77,7 @@ public class ProcessManagerTestSetup {
 			javaTC.setMarkerStart("//");
 			result.setTemplateConfig(javaTC);
 			
-			GPTConfig gConfig = new GPTConfig();
+			ChatConfig gConfig = new ChatConfig();
 			gConfig.setSystemMessage(systemMessage);
 			gConfig.setTemperature(1.15);
 			gConfig.setIndividualTemperature(true);			

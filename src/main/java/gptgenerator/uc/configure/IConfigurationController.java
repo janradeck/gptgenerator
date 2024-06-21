@@ -5,42 +5,86 @@ import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
 import gptgenerator.uc.configure.sourcepartition.SourcePartitioning;
 import gptgenerator.uc.processing.o2prompt.IChatClient;
 
+/**
+ * The controller for the configuration model. 
+ */
 public interface IConfigurationController {
+	/**
+	 * Enable the calls to the chat API, if set to true
+	 * @param makeApiCalls
+	 */
+	void setMakeApiCalls(boolean makeApiCalls);
 	
-	void setProd(boolean isProd);
-	void setProjectRoot(String root);
-	void setInputCurrentDir(String dir);
-	void setNumberOfThreads(int number);
-	void setTemperature(String temperatureText);
+	void setProjectRoot(String projectRoot);
+	void setInputCurrentDir(String inputCurrentDir);
+	void setChatNumberOfThreads(int numberOfThreads);
+	void setChatTemperature(String temperatureText);
+	void setChatApiURL(String chatApiURL);
+	void setChatApiKey(String chatApiToken);
 	
-	void setPartitionAt (int index, ISourcePartitionModel sourcePartition);
+	void setPartitionAt (int partitionIndex, ISourcePartitionModel sourcePartition);
 	void addPartition (ISourcePartitionModel sourcePartition);
-	void removePartition (int index);
+	void removePartition (int partitionIndex);
 
-	Integer getNumberOfThreads();
-	Double getTemperature(String string);
+	Integer getChatNumberOfThreads();
+	String getChatApiURL();
+	String getChatApiToken();
+	Double getChatTemperature(String temperatureString);
+	boolean makeApiCalls();
+	
 	SourcePartitioning getSourcePartitioning();
-	boolean isProd();
 
 	String getSystemMessage(String baseFilename);
-	IChatClient getChatClient(double temperature);
+	IChatClient getChatClient(String chatApiUrl, String chatApiKey, double chatTemperature);
+	
 	ITemplateConfigModel getTemplateConfig(String cur);
 	String getReplyCacheDir();
 	String getInputCurDir();	
 	String getMergeCurDir();
 	
-	void notifySetProjectRoot(String root);
-	void notifySetInputCurrentDir(String dir);
-	void notifySetNumberOfThreads(String numberOfThreads);
-	void notifySetTemperature(String temperatureText);
-	void notifySetIsProd(boolean isProd);
+	void notifySetProjectRoot(String projectRoot);
+	void notifySetInputCurrentDir(String inputCurrentDir);
+	void notifySetChatNumberOfThreads(String numberOfThreads);
+	void notifySetChatTemperature(String temperatureText);
+	void notifySetMakeApiCalls(boolean makeApiCalls);
+
+	void notifySetChatApiURL(String chatApiURL);
+	void notifySetChatApiToken(String chatApiToken);
 	
-	void notifySetPartitionAt (int index, ISourcePartitionModel installCfg);
-	void notifySetInstalls(SourcePartitioning installs);
-	void notifyAddPartition(ISourcePartitionModel installCfg);
-	void notifyRemovePartition (int index);
+	/**
+	 * @param partitionIndex
+	 * @param sourcePartitionModel
+	 */
+	void notifySetPartitionAt (int partitionIndex, ISourcePartitionModel sourcePartitionModel);
+	/**
+	 * @param sourcePartition
+	 */
+	void notifySetSourcePartitions(SourcePartitioning sourcePartition);
+	/**
+	 * Add a new SourcePartition
+	 * @param sourcePartition
+	 */
+	void notifyAddPartition(ISourcePartitionModel sourcePartition);
+	/**
+	 * Notify the listeners that the partition at the given index has been removed
+	 * @param partitionIndex
+	 */
+	void notifyRemovePartition (int partitionIndex);
 	
-	void addView(IConfigurationView view);
-	void removeView(IConfigurationView view);
+	/**
+	 * Add a view to the list of views that will be updated when the model changes
+	 * @param configurationView
+	 */
+	void addView(IConfigurationView configurationView);
+	
+	/**
+	 * Remove a view from the list of views that will be updated when the model changes
+	 * @param configurationView
+	 */
+	void removeView(IConfigurationView configurationView);
+	/**
+	 * Requests that all views update their display
+	 */
 	void requestViewUpdate();
+
 }

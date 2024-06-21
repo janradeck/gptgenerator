@@ -13,6 +13,10 @@ import gptgenerator.uc.mainview.TransformationStatus;
 import gptgenerator.uc.processing.IStatusDecider;
 import gptgenerator.uc.processing.IStepManager;
 
+/**
+ * The PromptManager uses the ChatClient to send prompts to the Chat API
+ * @see IChatClient
+ */
 public class PromptManager implements IStepManager {
 	private static final long MINUTE_VALUE = 5;
 
@@ -30,7 +34,7 @@ public class PromptManager implements IStepManager {
 
 	@Override
 	public boolean filesReady() {
-		return filestateController.getPromptPendingList(decider).size() > 0;
+		return ! filestateController.getPromptPendingList(decider).isEmpty();
 	}
 
 	@Override
@@ -40,15 +44,17 @@ public class PromptManager implements IStepManager {
 
 	@Override
 	public void process() {
-		ExecutorService executorService = Executors.newFixedThreadPool(configurationController.getNumberOfThreads());		
+		ExecutorService executorService = Executors.newFixedThreadPool(configurationController.getChatNumberOfThreads());		
 		for (TransformationStatus curFile: filestateController.getPromptPendingList(decider)) {
 			CacheEntry userPrompt = filestateController.getMergeFileCur(curFile.getBaseFilename());
 			String systemMessage = configurationController.getSystemMessage(curFile.getBaseFilename());
-			double temperature = configurationController.getTemperature(curFile.getBaseFilename());
+			String chatApiUrl = configurationController.getChatApiURL();
+			String chatApiKey = configurationController.getChatApiToken();
+			double chatTemperature = configurationController.getChatTemperature(curFile.getBaseFilename());
 			promptResultController.addProcessedFile();
 
 			// System.err.println("PromptManager::process() "+ prompt.toString());
-			IChatClient client = configurationController.getChatClient(temperature);
+			IChatClient client = configurationController.getChatClient(chatApiUrl, chatApiKey, chatTemperature);
 			String replyFilename = FileService.removePromptExt(curFile.getBaseFilename());
 			CacheEntry prevReply = filestateController.getMergeFileCur(replyFilename);
 			

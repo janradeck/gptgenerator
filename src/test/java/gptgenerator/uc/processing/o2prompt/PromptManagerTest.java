@@ -42,7 +42,7 @@ class PromptManagerTest {
 		cacheCollection.updateInput(configurationModel.getInputConfig());
 		cacheCollection.updateMerge(configurationModel.getMergeConfig());
 		
-		configurationModel.setProd(false);
+		configurationModel.setMakeChatApiCalls(false);
 		IFileStateModel filestateModel = new FileStateModel(cacheCollection, configurationModel);
 		IFileStateController filestateController = new FileStateController(configurationModel, filestateModel);
 		IResultModel promptResult = new ResultModel();

@@ -3,15 +3,15 @@ package gptgenerator.uc.processing.o2prompt;
 import java.util.ArrayList;
 import java.util.List;
 
-import gptgenerator.uc.configure.gpt.IGPTConfigModel;
+import gptgenerator.uc.configure.gpt.IChatConfigModel;
 import gptgenerator.uc.mainview.IGptConfigView;
 
 public class GptConfigController implements IGptConfigController {
 
-	private IGPTConfigModel config;
+	private IChatConfigModel config;
     private List<IGptConfigView> registeredViews = new ArrayList<IGptConfigView>();
 	
-	public GptConfigController (IGPTConfigModel config) {
+	public GptConfigController (IChatConfigModel config) {
 		this.config = config;
 	}
 	

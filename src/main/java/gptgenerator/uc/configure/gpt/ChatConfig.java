@@ -13,24 +13,24 @@ import gptgenerator.uc.processing.o2prompt.IGptConfigController;
  * <li>temperature: Verzeichnis-individueller Wert für "temperature"
  * </ul>
  */
-public class GPTConfig implements IGPTConfigModel {
+public class ChatConfig implements IChatConfigModel {
 	private String systemMessage;
-	private GptTemperature temperature;
+	private ChatTemperature temperature;
 	private Boolean individualTemperature;
 
 	@JsonIgnore
 	private IGptConfigController controller = new NilGptConfigController();
 
-	public GPTConfig() {
+	public ChatConfig() {
 		systemMessage = "";
 		individualTemperature = false;
-		temperature = new GptTemperature();
+		temperature = new ChatTemperature();
 	}
 
-	public GPTConfig(IGPTConfigModel source) {
+	public ChatConfig(IChatConfigModel source) {
 		this.systemMessage = source.getSystemMessage();
 		this.individualTemperature = source.getIndividualTemperature();
-		this.temperature = new GptTemperature(source.getTemperatureInstance());
+		this.temperature = new ChatTemperature(source.getTemperatureInstance());
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class GPTConfig implements IGPTConfigModel {
 	}
 
 	@JsonIgnore
-	public GptTemperature getTemperatureInstance() {
+	public ChatTemperature getTemperatureInstance() {
 		return temperature;
 	}
 	
@@ -105,7 +105,7 @@ public class GPTConfig implements IGPTConfigModel {
 	}
 	
 	public static boolean validateTemperatureString(String temperatureString) {
-		return GptTemperature.validateString(temperatureString);
+		return ChatTemperature.validateString(temperatureString);
 	}
 	
 

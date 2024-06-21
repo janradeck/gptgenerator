@@ -26,7 +26,7 @@ import gptgenerator.services.GbcFactory;
 import gptgenerator.services.GuiElementFactory;
 import gptgenerator.services.GuiPresetsService;
 import gptgenerator.uc.configure.IConfigurationController;
-import gptgenerator.uc.configure.gpt.GptTemperature;
+import gptgenerator.uc.configure.gpt.ChatTemperature;
 import gptgenerator.uc.configure.merge.ITemplateConfigController;
 import gptgenerator.uc.configure.merge.ITemplateConfigView;
 import gptgenerator.uc.mainview.IGptConfigView;
@@ -103,7 +103,7 @@ public class SourcePartitionView extends JFrame implements ISourcePartitionView,
         
         String buttonTitle = index < 0? "Add": "Save";
         addButton = new JButton(buttonTitle);
-        temperatureMessage = new JLabel(GptTemperature.validationMessage());
+        temperatureMessage = new JLabel(ChatTemperature.validationMessage());
         
         temperatureCheckBox = new JCheckBox();
         
@@ -481,7 +481,7 @@ public class SourcePartitionView extends JFrame implements ISourcePartitionView,
     	if (temperatureCheckBox.isSelected()) {
 	        String temperatureText = temperatureField.getText();
 	
-	        boolean isValid = GptTemperature.validateString(temperatureText);
+	        boolean isValid = ChatTemperature.validateString(temperatureText);
 	        temperatureMessage.setVisible(!isValid);
 	        return isValid;
     	} else {

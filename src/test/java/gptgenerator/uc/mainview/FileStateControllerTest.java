@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import gptgenerator.services.CacheCollection;
 import gptgenerator.uc.configure.ConfigurationModel;
 import gptgenerator.uc.configure.IConfigurationModel;
-import gptgenerator.uc.configure.gpt.GPTConfig;
+import gptgenerator.uc.configure.gpt.ChatConfig;
 import gptgenerator.uc.configure.sourcepartition.PrettyPrintSettings;
 import gptgenerator.uc.configure.sourcepartition.SourcePartition;
 import gptgenerator.uc.filecompare.CurrentAndPrevious;
@@ -36,15 +36,15 @@ class FileStateControllerTest {
 		cacheCollection.updateMerge(merge);
 		
 		IConfigurationModel configurationModel = new ConfigurationModel();
-		configurationModel.setProd(false);
+		configurationModel.setMakeChatApiCalls(false);
 		configurationModel.setInputConfig(input);
 		configurationModel.setMergeConfig(merge);
-		GPTConfig gConfig = new GPTConfig();
+		ChatConfig gConfig = new ChatConfig();
 		IFileStateModel filestateModel = new FileStateModel(cacheCollection, configurationModel);
 		TemplateConfig tConfig = new TemplateConfig();
 		PrettyPrintSettings ppSettings = new PrettyPrintSettings();
 		SourcePartition javaPart = new SourcePartition("java", installDirectory, ppSettings, gConfig, tConfig);
-		configurationModel.addPartition(javaPart);
+		configurationModel.addSourcePartition(javaPart);
 		
 		IFileStateController filestateController = new FileStateController(configurationModel, filestateModel);
 		
