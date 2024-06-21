@@ -41,6 +41,7 @@ import gptgenerator.uc.configure.sourcepartition.SourcePartition;
  * Dialogue to edit the configurationModel values 
  */
 public class ConfigurationView extends JFrame implements IConfigurationView {
+	private static final String CONFIG_WINDOW_TITLE = "Edit global configuration values";
 	private static final String MAKE_CHAT_API_CALLS = "Make Chat API calls";
 	private static final int SECOND_COLUMN_WIDTH = 250;
     private static final int FIRST_COLUMN_WIDTH = 20;
@@ -87,7 +88,7 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
     }
     
 	private void initComponents() {
-        setTitle("Edit configurationModel");        
+        setTitle(CONFIG_WINDOW_TITLE);        
    		setSize(MIN_WIDTH, MIN_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
    		
