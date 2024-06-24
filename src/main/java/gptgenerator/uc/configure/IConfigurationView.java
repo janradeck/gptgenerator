@@ -3,11 +3,11 @@ package gptgenerator.uc.configure;
 import java.util.List;
 
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
-import gptgenerator.uc.configure.sourcepartition.SourcePartition;
+import gptgenerator.uc.configure.sourcepartition.SourcePartitionModel;
 
 /**
  * A view for the configuration model
- * @see SourcePartition
+ * @see SourcePartitionModel
  * @see ISourcePartitionModel
  * @see IConfigurationController
  */
@@ -27,7 +27,7 @@ public interface IConfigurationView {
 
 	void removeInstallAt(int deleteIndex);
 
-	void setInstall(List<SourcePartition> list);
+	void setInstall(List<SourcePartitionModel> list);
 
 	void setChatTemperature(String temperatureText);
 	
@@ -36,4 +36,6 @@ public interface IConfigurationView {
 	void setChatApiURL(String chatApiURL);
 	
 	void setChatApiKey(String chatApiKey);
+
+	void setChatModel(String newChatModel);
 }

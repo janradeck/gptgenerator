@@ -1,21 +1,21 @@
 package gptgenerator.uc.configure.sourcepartition;
 
-import gptgenerator.uc.configure.gpt.ChatConfig;
+import gptgenerator.uc.configure.gpt.ChatConfigModel;
 import gptgenerator.uc.configure.gpt.IChatConfigModel;
 import gptgenerator.uc.configure.merge.ITemplateConfigModel;
 import gptgenerator.uc.configure.merge.TemplateConfigController;
 import gptgenerator.uc.processing.o1merge.TemplateConfig;
-import gptgenerator.uc.processing.o2prompt.GptConfigController;
+import gptgenerator.uc.processing.o2prompt.ChatConfigController;
 
 /**
  * Ein Unterverzeichnis der generierten Prompts.
  * <ul>
  * <li>Basisverzeichnis für die Installation der Antwort
- * <li>ChatConfig für dieses Unterverzeichnis
+ * <li>ChatConfigModel für dieses Unterverzeichnis
  * </ul>
  * 
  */
-public class SourcePartition implements ISourcePartitionModel {
+public class SourcePartitionModel implements ISourcePartitionModel {
     private String sourceDirRel;
 	private String destDirAbs;
 	
@@ -24,16 +24,16 @@ public class SourcePartition implements ISourcePartitionModel {
 	private ITemplateConfigModel templateConfig;
 	private ISourcePartitionController controller;
 		
-	public SourcePartition() {
+	public SourcePartitionModel() {
 		destDirAbs = "";
 		sourceDirRel = "";
-		prettyPrintSettings = new PrettyPrintSettings();
-		gptConfig = new ChatConfig();
+		prettyPrintSettings = new PrettyPrintSettingsModel();
+		gptConfig = new ChatConfigModel();
 		templateConfig = new TemplateConfig();
 		controller = new NilSourcePartitionController();
 	}
 	
-	public SourcePartition(String source, String dest, IPrettyPrintSettings ppSettings, IChatConfigModel gptConfig, ITemplateConfigModel templateConfig) {
+	public SourcePartitionModel(String source, String dest, IPrettyPrintSettings ppSettings, IChatConfigModel gptConfig, ITemplateConfigModel templateConfig) {
 		this.sourceDirRel = source;
 		this.destDirAbs = dest;
 		this.prettyPrintSettings = ppSettings;
@@ -42,11 +42,11 @@ public class SourcePartition implements ISourcePartitionModel {
 		controller = new NilSourcePartitionController();
 	}
 	
-    public SourcePartition(ISourcePartitionModel iSourcePartitionModel) {
+    public SourcePartitionModel(ISourcePartitionModel iSourcePartitionModel) {
 		this.sourceDirRel = iSourcePartitionModel.getSourceDirRel();
 		this.destDirAbs = iSourcePartitionModel.getDestDirAbs();
-		this.prettyPrintSettings = new PrettyPrintSettings(iSourcePartitionModel.getPrettyPrintSettings());		
-		this.gptConfig = new ChatConfig(iSourcePartitionModel.getGptConfig());
+		this.prettyPrintSettings = new PrettyPrintSettingsModel(iSourcePartitionModel.getPrettyPrintSettings());		
+		this.gptConfig = new ChatConfigModel(iSourcePartitionModel.getGptConfig());
 		this.templateConfig = new TemplateConfig(iSourcePartitionModel.getTemplateConfig());
 		this.controller = new NilSourcePartitionController();
 	}
@@ -92,7 +92,7 @@ public class SourcePartition implements ISourcePartitionModel {
 
 	
 	@Override
-	public void setGptConfig(ChatConfig gptConfig) {
+	public void setGptConfig(ChatConfigModel gptConfig) {
 		this.gptConfig = gptConfig;
 	}
 
@@ -130,7 +130,7 @@ public class SourcePartition implements ISourcePartitionModel {
 	private class NilSourcePartitionController implements ISourcePartitionController {
 
 		@Override
-		public GptConfigController getGptConfigController() {
+		public ChatConfigController getGptConfigController() {
 			return null;
 		}
 

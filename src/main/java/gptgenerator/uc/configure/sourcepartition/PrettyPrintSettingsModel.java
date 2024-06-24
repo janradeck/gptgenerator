@@ -1,19 +1,19 @@
 package gptgenerator.uc.configure.sourcepartition;
 
-public class PrettyPrintSettings implements IPrettyPrintSettings {
+public class PrettyPrintSettingsModel implements IPrettyPrintSettings {
 	private boolean prettyPrintInput;
 	private boolean prettyPrintMerge;
 	private String  prettyPrintIgnoreFiles;
 	
 	private IPrettyPrintSettingsController controller = new NilPrettyPrintSettingsController();
 	
-	public PrettyPrintSettings() {
+	public PrettyPrintSettingsModel() {
 		prettyPrintInput=false;
 		prettyPrintMerge=false;
 		prettyPrintIgnoreFiles="";		
 	}
 	
-	public PrettyPrintSettings(IPrettyPrintSettings prettyPrintSettings) {
+	public PrettyPrintSettingsModel(IPrettyPrintSettings prettyPrintSettings) {
 		this.prettyPrintInput = prettyPrintSettings.isPrettyPrintInput();
 		this.prettyPrintMerge = prettyPrintSettings.isPrettyPrintMerge();
 		this.prettyPrintIgnoreFiles = prettyPrintSettings.getPrettierIgnoreFiles();

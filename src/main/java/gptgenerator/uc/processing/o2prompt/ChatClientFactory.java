@@ -15,9 +15,9 @@ public class ChatClientFactory {
 	 * @param temperature
 	 * @return
 	 */
-	public static IChatClient getChatClient(IConfigurationController controller, String apiUrl, String apiKey, double temperature) {
+	public static IChatClient getChatClient(IConfigurationController controller, String apiUrl, String apiKey, String chatModel, double temperature) {
 		if (controller.makeApiCalls()) {
-			return new GPTClient(apiUrl, apiKey, temperature);
+			return new GPTClient(apiUrl, apiKey, chatModel, temperature);
 		} else {
 			return new DummyGPTClient(temperature);
 		}

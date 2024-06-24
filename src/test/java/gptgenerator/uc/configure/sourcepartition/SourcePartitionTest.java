@@ -7,7 +7,7 @@ class SourcePartitionTest {
 	private final static String DEST = "destDirAbs";
 	@Test
 	void testInstallCfg() {
-		SourcePartition cfg = new SourcePartition();
+		SourcePartitionModel cfg = new SourcePartitionModel();
 		cfg.setDestDirAbs(DEST);
 		Assertions.assertEquals(DEST, cfg.getDestDirAbs());
 	}

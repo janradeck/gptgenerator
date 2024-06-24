@@ -69,7 +69,7 @@ public interface IFileStateController {
 	
 	void installMerged(String curFilename, String destName);
 	/**
-	 * Are all files in InputDir mapped by a SourcePartition
+	 * Are all files in InputDir mapped by a SourcePartitionModel
 	 * @return
 	 */
 	public String validateInputDirIsMappedBySourcePartitioning();

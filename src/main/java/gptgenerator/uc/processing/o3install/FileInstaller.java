@@ -8,13 +8,13 @@ import java.nio.file.Files;
 
 import gptgenerator.services.FileService;
 import gptgenerator.uc.configure.IConfigurationController;
-import gptgenerator.uc.configure.sourcepartition.SourcePartition;
+import gptgenerator.uc.configure.sourcepartition.SourcePartitionModel;
 import gptgenerator.uc.mainview.IFileStateController;
 
 public class FileInstaller {
 
-	public static void install(String baseDir, List<SourcePartition> mapping) {
-		for (SourcePartition cur: mapping) {
+	public static void install(String baseDir, List<SourcePartitionModel> mapping) {
+		for (SourcePartitionModel cur: mapping) {
 		String src = cur.getSourceDirRel();
 			File srcDir = java.nio.file.Paths.get(baseDir, src).toFile();
 			try {

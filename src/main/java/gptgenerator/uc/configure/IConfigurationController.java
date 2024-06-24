@@ -21,6 +21,11 @@ public interface IConfigurationController {
 	void setChatTemperature(String temperatureText);
 	void setChatApiURL(String chatApiURL);
 	void setChatApiKey(String chatApiToken);
+	/**
+	 * Set a new chat model
+	 * @param newChatModel
+	 */
+	void notifySetChatModel(String newChatModel);
 	
 	void setPartitionAt (int partitionIndex, ISourcePartitionModel sourcePartition);
 	void addPartition (ISourcePartitionModel sourcePartition);
@@ -30,12 +35,13 @@ public interface IConfigurationController {
 	String getChatApiURL();
 	String getChatApiToken();
 	Double getChatTemperature(String temperatureString);
+	String getChatModel();
 	boolean makeApiCalls();
 	
 	SourcePartitioning getSourcePartitioning();
 
 	String getSystemMessage(String baseFilename);
-	IChatClient getChatClient(String chatApiUrl, String chatApiKey, double chatTemperature);
+	IChatClient getChatClient(String chatApiUrl, String chatApiKey, String chatModel, double chatTemperature);
 	
 	ITemplateConfigModel getTemplateConfig(String cur);
 	String getReplyCacheDir();
@@ -61,7 +67,7 @@ public interface IConfigurationController {
 	 */
 	void notifySetSourcePartitions(SourcePartitioning sourcePartition);
 	/**
-	 * Add a new SourcePartition
+	 * Add a new SourcePartitionModel
 	 * @param sourcePartition
 	 */
 	void notifyAddPartition(ISourcePartitionModel sourcePartition);
@@ -86,5 +92,7 @@ public interface IConfigurationController {
 	 * Requests that all views update their display
 	 */
 	void requestViewUpdate();
+
+
 
 }

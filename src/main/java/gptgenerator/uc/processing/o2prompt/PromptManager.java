@@ -50,11 +50,12 @@ public class PromptManager implements IStepManager {
 			String systemMessage = configurationController.getSystemMessage(curFile.getBaseFilename());
 			String chatApiUrl = configurationController.getChatApiURL();
 			String chatApiKey = configurationController.getChatApiToken();
+			String chatModel = configurationController.getChatModel();
 			double chatTemperature = configurationController.getChatTemperature(curFile.getBaseFilename());
 			promptResultController.addProcessedFile();
 
 			// System.err.println("PromptManager::process() "+ prompt.toString());
-			IChatClient client = configurationController.getChatClient(chatApiUrl, chatApiKey, chatTemperature);
+			IChatClient client = configurationController.getChatClient(chatApiUrl, chatApiKey, chatModel, chatTemperature);
 			String replyFilename = FileService.removePromptExt(curFile.getBaseFilename());
 			CacheEntry prevReply = filestateController.getMergeFileCur(replyFilename);
 			

@@ -11,9 +11,9 @@ import gptgenerator.uc.configure.ConfigurationController;
 import gptgenerator.uc.configure.ConfigurationModel;
 import gptgenerator.uc.configure.IConfigurationController;
 import gptgenerator.uc.configure.IConfigurationModel;
-import gptgenerator.uc.configure.gpt.ChatConfig;
-import gptgenerator.uc.configure.sourcepartition.PrettyPrintSettings;
-import gptgenerator.uc.configure.sourcepartition.SourcePartition;
+import gptgenerator.uc.configure.gpt.ChatConfigModel;
+import gptgenerator.uc.configure.sourcepartition.PrettyPrintSettingsModel;
+import gptgenerator.uc.configure.sourcepartition.SourcePartitionModel;
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
 import gptgenerator.uc.mainview.FileStateController;
 import gptgenerator.uc.mainview.FileStateModel;
@@ -62,11 +62,11 @@ public class ProcessManagerTestSetup {
 		}
 		
 		private static ISourcePartitionModel makeSourcePart(String projectRoot, String systemMessage, String filetype) {
-			ISourcePartitionModel result = new SourcePartition();
+			ISourcePartitionModel result = new SourcePartitionModel();
 			result.setSourceDirRel(filetype);
 			result.setDestDirAbs(projectRoot + File.separator + "install" + File.separator + filetype);
 			
-			PrettyPrintSettings ppSettings = new PrettyPrintSettings();
+			PrettyPrintSettingsModel ppSettings = new PrettyPrintSettingsModel();
 			ppSettings.setPrettyPrintInput(false);
 			ppSettings.setPrettyPrintMerge(false);
 			ppSettings.setPrettierIgnoreFiles("");
@@ -77,7 +77,7 @@ public class ProcessManagerTestSetup {
 			javaTC.setMarkerStart("//");
 			result.setTemplateConfig(javaTC);
 			
-			ChatConfig gConfig = new ChatConfig();
+			ChatConfigModel gConfig = new ChatConfigModel();
 			gConfig.setSystemMessage(systemMessage);
 			gConfig.setTemperature(1.15);
 			gConfig.setIndividualTemperature(true);			

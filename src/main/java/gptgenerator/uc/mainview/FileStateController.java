@@ -164,7 +164,7 @@ public class FileStateController implements IFileStateController {
 	public String validateInputDirIsMappedBySourcePartitioning() {
 		for (String curFilename: stateModel.getInputFiles()) {
 			if (null == configuration.mapToDestination(curFilename)) {
-				return "No SourcePartition for input file " + curFilename;
+				return "No SourcePartitionModel for input file " + curFilename;
 			}
 		}
 		return "";

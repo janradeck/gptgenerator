@@ -2,8 +2,8 @@ package gptgenerator.uc.configure.gpt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import gptgenerator.uc.mainview.IGptConfigView;
-import gptgenerator.uc.processing.o2prompt.IGptConfigController;
+import gptgenerator.uc.mainview.IChatConfigView;
+import gptgenerator.uc.processing.o2prompt.IChatConfigController;
 
 /**
  * Einstellungen für ChatGPT, für ein Unterverzeichnis
@@ -13,28 +13,28 @@ import gptgenerator.uc.processing.o2prompt.IGptConfigController;
  * <li>temperature: Verzeichnis-individueller Wert für "temperature"
  * </ul>
  */
-public class ChatConfig implements IChatConfigModel {
+public class ChatConfigModel implements IChatConfigModel {
 	private String systemMessage;
 	private ChatTemperature temperature;
 	private Boolean individualTemperature;
 
 	@JsonIgnore
-	private IGptConfigController controller = new NilGptConfigController();
+	private IChatConfigController controller = new NilGptConfigController();
 
-	public ChatConfig() {
+	public ChatConfigModel() {
 		systemMessage = "";
 		individualTemperature = false;
 		temperature = new ChatTemperature();
 	}
 
-	public ChatConfig(IChatConfigModel source) {
+	public ChatConfigModel(IChatConfigModel source) {
 		this.systemMessage = source.getSystemMessage();
 		this.individualTemperature = source.getIndividualTemperature();
 		this.temperature = new ChatTemperature(source.getTemperatureInstance());
 	}
 
 	@Override
-	public void setController(IGptConfigController controller) {
+	public void setController(IChatConfigController controller) {
 		this.controller = controller;		
 	}
 
@@ -109,7 +109,7 @@ public class ChatConfig implements IChatConfigModel {
 	}
 	
 
-	private class NilGptConfigController implements IGptConfigController {
+	private class NilGptConfigController implements IChatConfigController {
 
 		@Override
 		public void setSystemMessage(String message) {
@@ -136,12 +136,12 @@ public class ChatConfig implements IChatConfigModel {
 		}
 
 		@Override
-		public void addView(IGptConfigView view) {
+		public void addView(IChatConfigView view) {
 			System.err.println("NilGptController.addView() called");
 		}
 
 		@Override
-		public void removeView(IGptConfigView view) {
+		public void removeView(IChatConfigView view) {
 			System.err.println("NilGptController.removeView() called");
 		}
 

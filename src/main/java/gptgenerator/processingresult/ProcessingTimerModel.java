@@ -2,14 +2,14 @@ package gptgenerator.processingresult;
 
 import gptgenerator.uc.mainview.IProcessingTimerView;
 
-public class ProcessingTimer implements IProcessingTimer {
+public class ProcessingTimerModel implements IProcessingTimerModel {
 	private long start = 0L;
 	private long end = 0L;
 	private boolean running = false;
 	
 	private IProcessingTimerController controller = new NilProcessingTimerController();
 	
-	public ProcessingTimer(IProcessingTimerController controller) {
+	public ProcessingTimerModel(IProcessingTimerController controller) {
 		this.controller = controller;
 	}
 	

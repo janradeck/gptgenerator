@@ -5,15 +5,15 @@ import java.util.List;
 
 import gptgenerator.uc.configure.merge.ITemplateConfigController;
 import gptgenerator.uc.configure.merge.TemplateConfigController;
-import gptgenerator.uc.processing.o2prompt.GptConfigController;
-import gptgenerator.uc.processing.o2prompt.IGptConfigController;
+import gptgenerator.uc.processing.o2prompt.ChatConfigController;
+import gptgenerator.uc.processing.o2prompt.IChatConfigController;
 
 /**
  * 
  */
 public class SourcePartitionController implements ISourcePartitionController {
 	private ISourcePartitionModel model;
-	private IGptConfigController gptController;
+	private IChatConfigController gptController;
 	private ITemplateConfigController templateConfigController;
 	private IPrettyPrintSettingsController ppSettingsController;
 	
@@ -21,7 +21,7 @@ public class SourcePartitionController implements ISourcePartitionController {
 	
 	public SourcePartitionController (ISourcePartitionModel modelCopy) {
 		this.model = modelCopy;
-		this.gptController = new GptConfigController(modelCopy.getGptConfig());
+		this.gptController = new ChatConfigController(modelCopy.getGptConfig());
 		this.templateConfigController = new TemplateConfigController(modelCopy.getTemplateConfig());
 		this.ppSettingsController = new PrettyPrintSettingsController(modelCopy.getPrettyPrintSettings());
 	}
@@ -37,7 +37,7 @@ public class SourcePartitionController implements ISourcePartitionController {
 	}
 	 
 	@Override
-	public IGptConfigController getGptConfigController() {
+	public IChatConfigController getGptConfigController() {
 		return gptController;
 	}
 

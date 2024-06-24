@@ -2,9 +2,9 @@ package gptgenerator.uc.configure.gpt;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import gptgenerator.uc.processing.o2prompt.IGptConfigController;
+import gptgenerator.uc.processing.o2prompt.IChatConfigController;
 
-@JsonDeserialize(as = ChatConfig.class)
+@JsonDeserialize(as = ChatConfigModel.class)
 public interface IChatConfigModel {
 
 	String getSystemMessage();
@@ -15,7 +15,7 @@ public interface IChatConfigModel {
 	void setTemperature(String temperature);
 	void setIndividualTemperature(Boolean individualTemperature);
 	
-	void setController(IGptConfigController controller);
+	void setController(IChatConfigController controller);
 	void clrController();
 	Double getTemperature();
 	ChatTemperature getTemperatureInstance();

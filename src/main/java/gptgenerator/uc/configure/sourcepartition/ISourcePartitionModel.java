@@ -2,12 +2,12 @@ package gptgenerator.uc.configure.sourcepartition;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import gptgenerator.uc.configure.gpt.ChatConfig;
+import gptgenerator.uc.configure.gpt.ChatConfigModel;
 import gptgenerator.uc.configure.gpt.IChatConfigModel;
 import gptgenerator.uc.configure.merge.ITemplateConfigModel;
 import gptgenerator.uc.processing.o1merge.TemplateConfig;
 
-@JsonDeserialize(as = SourcePartition.class)
+@JsonDeserialize(as = SourcePartitionModel.class)
 public interface ISourcePartitionModel {
 	
 	void setSourceDirRel(String source);
@@ -17,7 +17,7 @@ public interface ISourcePartitionModel {
 	String getDestDirAbs();
 	
 	IPrettyPrintSettings getPrettyPrintSettings();
-	void setGptConfig(ChatConfig gptConfig);
+	void setGptConfig(ChatConfigModel gptConfig);
 	void setTemplateConfig(TemplateConfig templateConfig);
 	ITemplateConfigModel getTemplateConfig();
 

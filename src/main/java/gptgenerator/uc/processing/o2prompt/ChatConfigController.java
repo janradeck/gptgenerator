@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gptgenerator.uc.configure.gpt.IChatConfigModel;
-import gptgenerator.uc.mainview.IGptConfigView;
+import gptgenerator.uc.mainview.IChatConfigView;
 
-public class GptConfigController implements IGptConfigController {
+public class ChatConfigController implements IChatConfigController {
 
 	private IChatConfigModel config;
-    private List<IGptConfigView> registeredViews = new ArrayList<IGptConfigView>();
+    private List<IChatConfigView> registeredViews = new ArrayList<>();
 	
-	public GptConfigController (IChatConfigModel config) {
+	public ChatConfigController (IChatConfigModel config) {
 		this.config = config;
 	}
 	
@@ -36,32 +36,32 @@ public class GptConfigController implements IGptConfigController {
 
 	@Override
 	public void notifySetSystemMessage(String message) {
-		for (IGptConfigView view: registeredViews) {
+		for (IChatConfigView view: registeredViews) {
 			view.setSystemMessage(message);
 		}		
 	}
 
 	@Override
 	public void notifySetTemperature(String temperature) {
-		for (IGptConfigView view: registeredViews) {
+		for (IChatConfigView view: registeredViews) {
 			view.setTemperature(temperature);
 		}		
 	}
 
 	@Override
 	public void notifySetIndividualTemperature(Boolean isIndividual) {
-		for (IGptConfigView view: registeredViews) {
+		for (IChatConfigView view: registeredViews) {
 			view.setIndividualTemperature(isIndividual);
 		}		
 	}
 
 	@Override
-	public void addView(IGptConfigView view) {
+	public void addView(IChatConfigView view) {
 		registeredViews.add(view);
 	}
 
 	@Override
-	public void removeView(IGptConfigView view) {
+	public void removeView(IChatConfigView view) {
 		registeredViews.remove(view);
 	}
 	

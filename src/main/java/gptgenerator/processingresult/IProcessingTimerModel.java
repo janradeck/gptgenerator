@@ -1,6 +1,6 @@
 package gptgenerator.processingresult;
 
-public interface IProcessingTimer {
+public interface IProcessingTimerModel {
 	void reset();
 	void start();
 	void stop();

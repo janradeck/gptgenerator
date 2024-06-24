@@ -5,8 +5,8 @@ import java.io.File;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import gptgenerator.uc.configure.gpt.ChatConfig;
-import gptgenerator.uc.configure.sourcepartition.SourcePartition;
+import gptgenerator.uc.configure.gpt.ChatConfigModel;
+import gptgenerator.uc.configure.sourcepartition.SourcePartitionModel;
 import gptgenerator.uc.processing.o1merge.TemplateConfig;
 
 /**
@@ -22,7 +22,7 @@ class ConfigurationModelTest {
 		Assertions.assertFalse(target.exists());
 		ConfigurationModel cfm = new ConfigurationModel();
 		cfm.setMakeChatApiCalls(false);
-		SourcePartition spJava = new SourcePartition();
+		SourcePartitionModel spJava = new SourcePartitionModel();
 		spJava.setSourceDirRel("java");
 		spJava.setDestDirAbs("D:\\project\\src_gen");
 		TemplateConfig tcJava =  new TemplateConfig();
@@ -30,14 +30,14 @@ class ConfigurationModelTest {
 		tcJava.setMarkerEnd(")#");
 		spJava.setTemplateConfig(tcJava);
 		
-		ChatConfig gptJava = new ChatConfig();
+		ChatConfigModel gptJava = new ChatConfigModel();
 		gptJava.setSystemMessage("You are a Java developer. Reply only with code. Do not include example usage or explanations.");
 		gptJava.setIndividualTemperature(false);
 		gptJava.setTemperature(1.0);
 		spJava.setGptConfig(gptJava);
 		cfm.addSourcePartition(spJava);
 
-		SourcePartition spJs = new SourcePartition();
+		SourcePartitionModel spJs = new SourcePartitionModel();
 		spJs.setSourceDirRel("js");		
 		spJs.setDestDirAbs("D:\\develop\\robotconfig-client\\src\\app\\generated");
 
@@ -46,7 +46,7 @@ class ConfigurationModelTest {
 		tcJs.setMarkerEnd(")#");
 		spJs.setTemplateConfig(tcJs);
 		
-		ChatConfig gptJs = new ChatConfig();
+		ChatConfigModel gptJs = new ChatConfigModel();
 		gptJs.setSystemMessage("You are a Typescript developer. Reply only with code. Do not include example usage or explanations.");
 		gptJs.setIndividualTemperature(false);
 		gptJs.setTemperature(1.0);

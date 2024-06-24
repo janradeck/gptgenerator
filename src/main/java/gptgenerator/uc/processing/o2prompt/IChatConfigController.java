@@ -1,8 +1,8 @@
 package gptgenerator.uc.processing.o2prompt;
 
-import gptgenerator.uc.mainview.IGptConfigView;
+import gptgenerator.uc.mainview.IChatConfigView;
 
-public interface IGptConfigController {
+public interface IChatConfigController {
 
 	void setSystemMessage(String message);
 	void setTemperature (String temperature);
@@ -12,7 +12,7 @@ public interface IGptConfigController {
 	void notifySetTemperature (String temperature);
 	void notifySetIndividualTemperature(Boolean isIndividual);
 	
-	void addView(IGptConfigView view);
-	void removeView(IGptConfigView view);
+	void addView(IChatConfigView view);
+	void removeView(IChatConfigView view);
 	void requestViewUpdate();
 }

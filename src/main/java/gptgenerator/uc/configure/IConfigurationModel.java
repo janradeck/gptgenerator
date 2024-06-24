@@ -27,15 +27,18 @@ public interface IConfigurationModel {
 	void setInputCurrentDir(String inputCurrentDir);	
 
 	// Values for the LLM
+	void setChatNumberOfThreads(int number);
+	void setChatNumberOfThreads(Integer newChatNumberOfThreads);
+	void setChatTemperature(Double newChatTemperatureValue);
 	void setChatTemperature(String temperatureText);
 	void setChatApiURL(String apiURL);
 	void setChatApiToken(String apiToken);
+	void setChatModel(String newModel);
 
 	void setInputConfig(CurrentAndPrevious inputConfig);
 
 	void setMergeConfig(CurrentAndPrevious mergeConfig);
 	void setMakeChatApiCalls(boolean makeChatApiCalls);
-	void setChatNumberOfThreads(int number);
 	
 	void setSourcePartitionAt (int index, ISourcePartitionModel model);
 	void addSourcePartition (ISourcePartitionModel spJava);
@@ -49,7 +52,7 @@ public interface IConfigurationModel {
 	 * true: Requests are sent to the API
 	 * @return See above
 	 */
-	boolean makeChatApiCalls();
+	Boolean getChatMakeApiCalls();
 	
 	/**
 	 * The system message for the given baseFilename.<br>
@@ -87,6 +90,10 @@ public interface IConfigurationModel {
 	 * @return The number of threads to use when sendings requests to the LLM API
 	 */
 	Integer getChatNumberOfThreads();
+	
+	
+	String getChatModel();
+
 
 	ISourcePartitionModel getSourcePartition(int index);	
 	SourcePartitioning getSourcePartitions();

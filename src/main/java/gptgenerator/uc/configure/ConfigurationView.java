@@ -35,7 +35,7 @@ import gptgenerator.services.GuiElementFactory;
 import gptgenerator.services.GuiPresetsService;
 import gptgenerator.uc.configure.gpt.ChatTemperature;
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
-import gptgenerator.uc.configure.sourcepartition.SourcePartition;
+import gptgenerator.uc.configure.sourcepartition.SourcePartitionModel;
 
 /**
  * Dialogue to edit the configurationModel values 
@@ -70,6 +70,7 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
 
     private JTextField chatApiUrlField;
     private JTextField chatApiKeyField;
+    private JTextField chatModelField;
         
     private JCheckBox makeChatApiCallsCheckBox;
     
@@ -316,6 +317,20 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         mainPanel.add(chatApiKeyField, gbc);
         gbcc.nextRow();
                 
+        // CHAT model name
+        gbc = gbcc.getNone(editInsets);
+        gbc.anchor = GridBagConstraints.EAST;                
+        mainPanel.add(new JLabel("Chat model name"), gbc);
+        
+        chatModelField = new JTextField();
+        chatModelField.setColumns(FIELD_LENGTH);
+        chatModelField.setMinimumSize(MINIMUM_INPUT_DIMENSION);
+        gbc = gbcc.getHorizontal(editInsets);
+        gbc.gridwidth = GRID_COLUMNS - 1;
+        gbc.anchor = GridBagConstraints.WEST;                
+        
+        mainPanel.add(chatModelField, gbc);
+        gbcc.nextRow();
 
         // MAIN BUTTON PANEL
         JPanel mainButtonPanel = new JPanel();
@@ -489,7 +504,24 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
             public void changedUpdate(DocumentEvent e) {
                 // Plain text components do not fire these events
             }
-        });        
+        });
+        
+		chatModelField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				configurationController.setChatModel(chatModelField.getText());
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				configurationController.setChatModel(chatModelField.getText());
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// Plain text components do not fire these events
+			}
+		});
     	
     	
         saveButton.addActionListener(new ActionListener() {
@@ -501,7 +533,6 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
         });
     	
     }
-
 
 	private void requestViewUpdate() {
     	SwingUtilities.invokeLater(new Runnable() {
@@ -625,8 +656,8 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
 	}
 
 	@Override
-	public void setInstall(List<SourcePartition> list) {
-		for (SourcePartition cur: list) {
+	public void setInstall(List<SourcePartitionModel> list) {
+		for (SourcePartitionModel cur: list) {
 			tableModel.addRow(makeTableRow(cur));			
 		}
 		tableModel.fireTableDataChanged();		
@@ -664,6 +695,13 @@ public class ConfigurationView extends JFrame implements IConfigurationView {
 	public void setChatApiKey(String chatApiKey) {
 		if (!chatApiKeyField.getText().equals(chatApiKey)) {
 			chatApiKeyField.setText(chatApiKey);
+		}
+	}
+
+	@Override
+	public void setChatModel(String newChatModel) {
+		if (!chatModelField.getText().equals(newChatModel)) {
+			chatModelField.setText(newChatModel);
 		}
 	}
 

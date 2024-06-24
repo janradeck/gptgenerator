@@ -29,13 +29,12 @@ public class ConfigurationModel implements IConfigurationModel {
 	
 	private SourcePartitioning sourcePartitions = new SourcePartitioning();
 	
-	private ChatTemperature temperature = new ChatTemperature();
+	private ChatTemperature chatTemperature = new ChatTemperature();
 	private ProcessingThreadCount chatNumberOfThreads = new ProcessingThreadCount();
-	
-	private boolean makeChatApiCalls = false;
-	
+	private Boolean chatMakeApiCalls = false;
 	private String chatApiURL = "";
 	private String chatApiToken = "";
+	private String chatModel = "";
 	
 	@JsonIgnore
 	private IConfigurationController controller = new NilConfigurationController();
@@ -84,26 +83,35 @@ public class ConfigurationModel implements IConfigurationModel {
 		}
 	}
 	
-	
+	@Override
 	public void setChatTemperature(Double newChatTemperatureValue) {
-		if (!temperature.getTemperature().equals(newChatTemperatureValue)) {
-			temperature.setTemperature(newChatTemperatureValue);
+		if (!chatTemperature.getTemperature().equals(newChatTemperatureValue)) {
+			chatTemperature.setTemperature(newChatTemperatureValue);
 			controller.notifySetChatTemperature(getChatNumberOfThreadsString().formatted("%.1f", newChatTemperatureValue));
 		}
 	}
 
 	@Override
 	public void setChatTemperature(String newChatTemperatureString) {
-		if (!temperature.getTemperatureString().equals(newChatTemperatureString)) {
-			temperature.setTemperature(newChatTemperatureString);
+		if (!chatTemperature.getTemperatureString().equals(newChatTemperatureString)) {
+			chatTemperature.setTemperature(newChatTemperatureString);
 			controller.notifySetChatTemperature(newChatTemperatureString);
 		}
 	}
 
+	@Override
 	public void setChatNumberOfThreads(Integer newChatNumberOfThreads) {
 		if (this.chatNumberOfThreads.getCount() != newChatNumberOfThreads) {
 			this.chatNumberOfThreads.setCount(newChatNumberOfThreads);
 			controller.notifySetChatNumberOfThreads(newChatNumberOfThreads.toString());
+		}
+	}
+	
+	@Override
+	public void setChatModel(String newChatModel) {
+		if (!chatModel.equals(newChatModel)) {
+			chatModel = newChatModel;
+			controller.notifySetChatModel(newChatModel);
 		}
 	}
 
@@ -164,12 +172,17 @@ public class ConfigurationModel implements IConfigurationModel {
 	@Override
 	@JsonIgnore
 	public String getChatTemperatureString() {
-		return temperature.getTemperatureString();
+		return chatTemperature.getTemperatureString();
 	}
 
 	@JsonIgnore
 	public String getChatNumberOfThreadsString() {
 		return String.format("%d", chatNumberOfThreads.getCount());
+	}
+	
+	@Override
+	public String getChatModel() {
+		return chatModel;
 	}
 
 	@Override
@@ -241,14 +254,14 @@ public class ConfigurationModel implements IConfigurationModel {
 	}
 
 	@Override
-	public boolean makeChatApiCalls() {
-		return makeChatApiCalls;
+	public Boolean getChatMakeApiCalls() {
+		return chatMakeApiCalls;
 	}
 
 	@Override
 	public void setMakeChatApiCalls(boolean makeApiCalls) {
-		if(this.makeChatApiCalls != makeApiCalls) {
-			this.makeChatApiCalls = makeApiCalls;
+		if(this.chatMakeApiCalls != makeApiCalls) {
+			this.chatMakeApiCalls = makeApiCalls;
 			controller.notifySetMakeApiCalls(makeApiCalls);
 		}
 	}
@@ -265,7 +278,7 @@ public class ConfigurationModel implements IConfigurationModel {
 		if (sourcePartitions.hasIndividualTemperature(baseFilename)) {
 			return sourcePartitions.getIndividualTemperature(baseFilename);
 		}
-		return temperature.getTemperature();
+		return chatTemperature.getTemperature();
 	}
 	
 	@Override
@@ -411,7 +424,7 @@ public class ConfigurationModel implements IConfigurationModel {
 		}
 
 		@Override
-		public IChatClient getChatClient(String chatApiUrl, String chatApiKey, double temperature) {
+		public IChatClient getChatClient(String chatApiUrl, String chatApiKey, String chatModel, double temperature) {
 			return null;
 		}
 
@@ -474,6 +487,15 @@ public class ConfigurationModel implements IConfigurationModel {
 
 		@Override
 		public String getChatApiToken() {
+			return null;
+		}
+
+		@Override
+		public void notifySetChatModel(String newChatModel) {
+		}
+
+		@Override
+		public String getChatModel() {
 			return null;
 		}
 

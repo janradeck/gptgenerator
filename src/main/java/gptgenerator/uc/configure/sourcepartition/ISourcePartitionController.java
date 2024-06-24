@@ -1,10 +1,10 @@
 package gptgenerator.uc.configure.sourcepartition;
 
 import gptgenerator.uc.configure.merge.ITemplateConfigController;
-import gptgenerator.uc.processing.o2prompt.IGptConfigController;
+import gptgenerator.uc.processing.o2prompt.IChatConfigController;
 
 public interface ISourcePartitionController {
-    IGptConfigController getGptConfigController();
+    IChatConfigController getGptConfigController();
     ITemplateConfigController getTemplateConfigController();
     
     void setSourceDirRel(String sourceDirRel);

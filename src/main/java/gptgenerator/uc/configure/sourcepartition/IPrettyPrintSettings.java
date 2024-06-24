@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * The IPrettyPrintSettings interface represents the settings for pretty printing in the GPT Generator.
  * It provides methods to set and retrieve the pretty print settings for input and merge operations.
  */
-@JsonDeserialize(as = PrettyPrintSettings.class)
+@JsonDeserialize(as = PrettyPrintSettingsModel.class)
 public interface IPrettyPrintSettings {
 	/**
 	 * Sets the pretty print setting for input operations.

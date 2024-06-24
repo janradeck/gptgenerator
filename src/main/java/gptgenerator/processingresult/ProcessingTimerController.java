@@ -7,10 +7,10 @@ import gptgenerator.uc.mainview.IProcessingTimerView;
 
 public class ProcessingTimerController implements IProcessingTimerController {
 
-	private IProcessingTimer timer;
+	private IProcessingTimerModel timer;
     private List<IProcessingTimerView> views = new ArrayList<>();
 	
-	public ProcessingTimerController (IProcessingTimer timer) {
+	public ProcessingTimerController (IProcessingTimerModel timer) {
 		this.timer = timer;
 		timer.setController(this);
 	}

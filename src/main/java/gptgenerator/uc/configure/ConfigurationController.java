@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 import gptgenerator.uc.configure.merge.ITemplateConfigModel;
 import gptgenerator.uc.configure.sourcepartition.ISourcePartitionModel;
-import gptgenerator.uc.configure.sourcepartition.SourcePartition;
+import gptgenerator.uc.configure.sourcepartition.SourcePartitionModel;
 import gptgenerator.uc.configure.sourcepartition.SourcePartitionView;
 import gptgenerator.uc.configure.sourcepartition.SourcePartitioning;
 import gptgenerator.uc.mainview.IMainModel;
@@ -100,13 +100,13 @@ public class ConfigurationController implements IConfigurationController {
 
 
 	@Override
-	public IChatClient getChatClient(String chatApiUrl, String chatApiKey, double temperature) {
-		return ChatClientFactory.getChatClient(this, chatApiUrl, chatApiKey, temperature);
+	public IChatClient getChatClient(String chatApiUrl, String chatApiKey, String chatModel, double temperature) {
+		return ChatClientFactory.getChatClient(this, chatApiUrl, chatApiKey, chatModel, temperature);
 	}
 	
 	@Override
 	public boolean makeApiCalls() {
-		return configurationModel.makeChatApiCalls();
+		return configurationModel.getChatMakeApiCalls();
 	}
 
 	
@@ -185,7 +185,7 @@ public class ConfigurationController implements IConfigurationController {
     	}
     }
 
-    public void notifySetInstalls(List<SourcePartition> list) {
+    public void notifySetInstalls(List<SourcePartitionModel> list) {
     	for (IConfigurationView view: views) {
     		view.setInstall(list);
     	}        
@@ -224,7 +224,7 @@ public class ConfigurationController implements IConfigurationController {
 	}
 
 	public void editTargetSubDir(JFrame parentView, ConfigurationView configurationView, int index) {
-		ISourcePartitionModel modelCopy = new SourcePartition(configurationModel.getSourcePartition(index));
+		ISourcePartitionModel modelCopy = new SourcePartitionModel(configurationModel.getSourcePartition(index));
 		SourcePartitionView editInstallationView = new SourcePartitionView(parentView, this, modelCopy,  index);
     	editInstallationView.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -235,7 +235,7 @@ public class ConfigurationController implements IConfigurationController {
 	}
 
 	public void editNewTargetSubDir(JFrame parentView, ConfigurationView configurationView) {
-		SourcePartition model = new SourcePartition();
+		SourcePartitionModel model = new SourcePartitionModel();
 		
     	SourcePartitionView editInstallationView = new SourcePartitionView(parentView, this, model, -1);
     	editInstallationView.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -263,7 +263,10 @@ public class ConfigurationController implements IConfigurationController {
 		notifySetInputCurrentDir(configurationModel.getInputCurDir());
 		notifySetChatTemperature(configurationModel.getChatTemperatureString());
 		notifySetChatNumberOfThreads(configurationModel.getChatNumberOfThreads().toString());
-		notifySetMakeApiCalls(configurationModel.makeChatApiCalls());
+		notifySetMakeApiCalls(configurationModel.getChatMakeApiCalls());
+		notifySetChatApiURL(configurationModel.getChatApiURL());
+		notifySetChatApiToken(configurationModel.getChatApiToken());
+		notifySetChatModel(configurationModel.getChatModel());
 		
 		notifyInstallsClear();
 		for (ISourcePartitionModel part: configurationModel.getSourcePartitions().getPartitions()) {
@@ -299,6 +302,22 @@ public class ConfigurationController implements IConfigurationController {
 	@Override
 	public String getChatApiToken() {
 		return configurationModel.getChatApiToken();
+	}
+
+	@Override
+	public void notifySetChatModel(String newChatModel) {
+		for (IConfigurationView view: views) {
+            view.setChatModel(newChatModel);
+        }
+	}
+
+	public void setChatModel(String newModel) {
+		configurationModel.setChatModel(newModel);	
+	}
+
+	@Override
+	public String getChatModel() {
+		return configurationModel.getChatModel();
 	}
 
 

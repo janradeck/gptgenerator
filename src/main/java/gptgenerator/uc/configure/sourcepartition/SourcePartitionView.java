@@ -29,10 +29,10 @@ import gptgenerator.uc.configure.IConfigurationController;
 import gptgenerator.uc.configure.gpt.ChatTemperature;
 import gptgenerator.uc.configure.merge.ITemplateConfigController;
 import gptgenerator.uc.configure.merge.ITemplateConfigView;
-import gptgenerator.uc.mainview.IGptConfigView;
-import gptgenerator.uc.processing.o2prompt.IGptConfigController;
+import gptgenerator.uc.mainview.IChatConfigView;
+import gptgenerator.uc.processing.o2prompt.IChatConfigController;
 
-public class SourcePartitionView extends JFrame implements ISourcePartitionView, ITemplateConfigView, IGptConfigView, IPrettyPrintSettingsView {
+public class SourcePartitionView extends JFrame implements ISourcePartitionView, ITemplateConfigView, IChatConfigView, IPrettyPrintSettingsView {
 	private static final long serialVersionUID = 4087995902033083312L;
 	private static final int DIRECTORIY_FIELD_LENGTH = 30;
 	private static final int NUMBER_FIELD_LENGTH = 3;
@@ -62,7 +62,7 @@ public class SourcePartitionView extends JFrame implements ISourcePartitionView,
     
     private ISourcePartitionController sourcePartitionController;  
     private ITemplateConfigController templateConfigController;
-    private IGptConfigController gptConfigController;
+    private IChatConfigController gptConfigController;
     private IConfigurationController configurationController;
     private IPrettyPrintSettingsController ppSettingsController;
     private ISourcePartitionModel sourcePartition;
